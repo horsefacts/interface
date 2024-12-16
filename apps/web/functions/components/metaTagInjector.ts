@@ -14,11 +14,15 @@ export class MetaTagInjector implements HTMLRewriterElementContentHandlers {
 
   append(element: Element, attribute: string, content: string) {
     // without adding data-rh="true", react-helmet-async doesn't overwrite existing metatags
-    element.append(`<meta ${attribute} content="${content}" data-rh="true">`, { html: true })
+    element.append(`<meta ${attribute} content='${content}' data-rh="true">`, { html: true })
   }
 
   appendProperty(element: Element, property: string, content: string) {
     this.append(element, `property="${property}"`, content)
+  }
+
+  appendName(element: Element, property: string, content: string) {
+    this.append(element, `name="${property}"`, content)
   }
 
   element(element: Element) {
@@ -46,6 +50,10 @@ export class MetaTagInjector implements HTMLRewriterElementContentHandlers {
     if (this.input.image) {
       this.appendProperty(element, 'twitter:image', this.input.image)
       this.appendProperty(element, 'twitter:image:alt', this.input.title)
+    }
+
+    if (this.input.frame) {
+      this.appendName(element, 'fc:frame', JSON.stringify(this.input.frame))
     }
 
     const blockedPaths = this.request.headers.get('x-blocked-paths')

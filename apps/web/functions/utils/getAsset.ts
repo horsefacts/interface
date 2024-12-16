@@ -20,11 +20,28 @@ export default async function getAsset(collectionAddress: string, tokenId: strin
     return undefined
   }
   const title = formatNFTAssetMetatagTitleName(asset.name, asset.collection?.name, asset.tokenId)
+
+  const frame = {
+    version: 'next',
+    imageUrl: `${image}?aspect=frame`,
+    button: {
+      title: 'View',
+      action: {
+        type: 'launch_frame',
+        name: 'Uniframe',
+        url: `https://uniframe.org/nfts/asset/${collectionAddress}/${tokenId}`,
+        splashImageUrl: 'https://uniframe.org/favicon.png',
+        splashBackgroundColor: '#131313',
+      },
+    },
+  } as const
+
   const formattedAsset: Data = {
     title,
     image,
     url,
     ogImage: asset.image?.url ?? origin + '/images/192x192_App_Icon.png',
+    frame,
   }
   return formattedAsset
 }

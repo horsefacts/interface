@@ -40,6 +40,21 @@ export default async function getPool(networkName: string, poolAddress: string, 
   const name = `${token0?.symbol}/${token1?.symbol}`
   const title = `${name} on Uniswap`
 
+  const frame = {
+    version: 'next',
+    imageUrl: `${image}?aspect=frame`,
+    button: {
+      title: 'View',
+      action: {
+        type: 'launch_frame',
+        name: 'Uniframe',
+        url,
+        splashImageUrl: 'https://uniframe.org/favicon.png',
+        splashBackgroundColor: '#131313',
+      },
+    },
+  } as const
+
   const formattedAsset: Data = {
     title,
     image,
@@ -51,6 +66,7 @@ export default async function getPool(networkName: string, poolAddress: string, 
       token0Image: token0?.project?.logoUrl,
       token1Image: token1?.project?.logoUrl,
     },
+    frame,
   }
   return formattedAsset
 }
