@@ -1,6 +1,8 @@
 // Ordering is intentional and must be preserved: sideEffects followed by functionality.
 import 'sideEffects'
 
+import FrameSDK from '@farcaster/frame-sdk'
+
 import { getDeviceId } from '@amplitude/analytics-browser'
 import { ApolloProvider } from '@apollo/client'
 import { PortalProvider } from '@tamagui/portal'
@@ -111,6 +113,17 @@ function MiniKitProvider({ children }: PropsWithChildren) {
   return <>{children}</>
 }
 
+function FarcasterFrameProvider({ children }: PropsWithChildren) {
+  useEffect(() => {
+    const load = async () => {
+      FrameSDK.actions.ready()
+    }
+    load()
+  }, [])
+
+  return <>{children}</>
+}
+
 const container = document.getElementById('root') as HTMLElement
 
 const Router = isBrowserRouterEnabled() ? BrowserRouter : HashRouter
@@ -136,7 +149,9 @@ createRoot(container).render(
                                   <PortalProvider>
                                     <ThemedGlobalStyle />
                                     <MiniKitProvider>
-                                      <App />
+                                      <FarcasterFrameProvider>
+                                        <App />
+                                      </FarcasterFrameProvider>
                                     </MiniKitProvider>
                                   </PortalProvider>
                                 </TamaguiProvider>
