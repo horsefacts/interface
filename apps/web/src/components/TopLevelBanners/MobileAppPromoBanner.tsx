@@ -3,7 +3,6 @@ import Column from 'components/deprecated/Column'
 import Row from 'components/deprecated/Row'
 import { useEthersWeb3Provider } from 'hooks/useEthersProvider'
 import { useAtom } from 'jotai'
-import { useAtomValue } from 'jotai/utils'
 import styled, { useTheme } from 'lib/styled-components'
 import { useState } from 'react'
 import { X } from 'react-feather'
@@ -50,7 +49,7 @@ const StyledButton = styled.a`
  * - The user has not dismissed the banner during this session
  */
 export function useMobileAppPromoBannerEligible() {
-  const hideMobileAppPromoBanner = useAtomValue(hideMobileAppPromoBannerAtom)
+  const hideMobileAppPromoBanner = true //useAtomValue(hideMobileAppPromoBannerAtom)
   return (isWebIOS || isWebAndroid) && !hideMobileAppPromoBanner
 }
 
