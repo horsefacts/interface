@@ -13,12 +13,17 @@ export const onRequest: PagesFunction = async ({ params, request }) => {
     const origin = new URL(request.url).origin
     const { index } = params
     const collectionAddress = index?.toString()
-    const cacheUrl = origin + '/nfts/collection/' + collectionAddress
+
+    const url = new URL(request.url)
+    const isFrameAspect = url.searchParams.get('aspect') === 'frame'
+    const imageHeight = isFrameAspect ? 1800 : 630
+    const imageWidth = 1200
 
     if (blocklistedCollections.includes(collectionAddress)) {
       return new Response('Collection unsupported.', { status: 404 })
     }
 
+    const cacheUrl = origin + '/nfts/collection/' + collectionAddress
     const data = await getRequest(
       cacheUrl,
       () => getCollection(collectionAddress, cacheUrl),
@@ -41,8 +46,8 @@ export const onRequest: PagesFunction = async ({ params, request }) => {
           style={{
             backgroundColor: 'black',
             display: 'flex',
-            width: '1200px',
-            height: '630px',
+            width: imageWidth,
+            height: imageHeight,
           }}
         >
           <div
@@ -51,13 +56,14 @@ export const onRequest: PagesFunction = async ({ params, request }) => {
               alignItems: 'center',
               backgroundColor: `rgba(${palette.red}, ${palette.green}, ${palette.blue}, 0.75)`,
               padding: '72px',
+              height: '100%',
             }}
           >
             <div
               style={{
                 display: 'flex',
                 flexDirection: 'row',
-                alignItems: 'flex-end',
+                alignItems: 'center',
                 gap: '48px',
                 width: '100%',
               }}
@@ -102,8 +108,8 @@ export const onRequest: PagesFunction = async ({ params, request }) => {
         </div>
       ),
       {
-        width: 1200,
-        height: 630,
+        width: imageWidth,
+        height: imageHeight,
         fonts: [
           {
             name: 'Inter',

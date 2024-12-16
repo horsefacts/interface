@@ -13,6 +13,12 @@ export const onRequest: PagesFunction = async ({ params, request }) => {
     const { index } = params
     const collectionAddress = index[0]?.toString()
     const tokenId = index[1]?.toString()
+
+    const url = new URL(request.url)
+    const isFrameAspect = url.searchParams.get('aspect') === 'frame'
+    const imageHeight = isFrameAspect ? 1800 : 630
+    const imageWidth = 1200
+
     const cacheUrl = origin + '/nfts/asset/' + collectionAddress + '/' + tokenId
 
     if (blocklistedCollections.includes(collectionAddress)) {
@@ -39,8 +45,9 @@ export const onRequest: PagesFunction = async ({ params, request }) => {
             alignItems: 'center',
             justifyContent: 'center',
             flexDirection: 'column',
-            width: '1200px',
-            height: '630px',
+            width: imageWidth,
+            height: imageHeight,
+            backgroundColor: 'black',
           }}
         >
           <img src={data.ogImage} alt={data.title} width="1200px" />
@@ -58,8 +65,8 @@ export const onRequest: PagesFunction = async ({ params, request }) => {
         </div>
       ),
       {
-        width: 1200,
-        height: 630,
+        width: imageWidth,
+        height: imageHeight,
         fonts: [
           {
             name: 'Inter',

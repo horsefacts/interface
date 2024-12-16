@@ -15,11 +15,29 @@ function doesMatchPath(path: string): boolean {
 export const onRequest: PagesFunction = async ({ request, next }) => {
   const requestURL = new URL(request.url)
   const imageUri = requestURL.origin + '/images/1200x630_Rich_Link_Preview_Image.png'
+
+  const frameUrl = new URL('https://uniframe.org/swap')
+  frameUrl.search = requestURL.search
+
   const data = {
     title: 'Uniswap Interface',
     image: imageUri,
     url: request.url,
     description: 'Swap or provide liquidity on the Uniswap Protocol',
+    frame: {
+      version: 'next',
+      imageUrl: imageUri,
+      button: {
+        title: 'Swap',
+        action: {
+          type: 'launch_frame',
+          name: 'Uniframe',
+          url: frameUrl.toString(),
+          splashImageUrl: 'https://uniframe.org/favicon.png',
+          splashBackgroundColor: '#131313',
+        },
+      },
+    } as const,
   }
   const response = next()
   if (doesMatchPath(requestURL.pathname)) {

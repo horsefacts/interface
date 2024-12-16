@@ -18,6 +18,22 @@ export default async function getCollection(collectionAddress: string, url: stri
   if (!collection || !collection.name) {
     return undefined
   }
+
+  const frame = {
+    version: 'next',
+    imageUrl: `${image}?aspect=frame`,
+    button: {
+      title: 'View',
+      action: {
+        type: 'launch_frame',
+        name: 'Uniframe',
+        url: `https://uniframe.org/nfts/collection/${collectionAddress}`,
+        splashImageUrl: 'https://uniframe.org/favicon.png',
+        splashBackgroundColor: '#131313',
+      },
+    },
+  } as const
+
   const formattedAsset: Data = {
     title: collection.name + ' on Uniswap',
     image,
@@ -27,6 +43,7 @@ export default async function getCollection(collectionAddress: string, url: stri
     nftCollectionData: {
       isVerified: collection.isVerified ?? false,
     },
+    frame,
   }
   return formattedAsset
 }
