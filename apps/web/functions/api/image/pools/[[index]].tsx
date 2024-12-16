@@ -89,6 +89,11 @@ export const onRequest: PagesFunction = async ({ params, request }) => {
     const networkName = String(index[0])
     const poolAddress = String(index[1])
 
+    const url = new URL(request.url)
+    const isFrameAspect = url.searchParams.get('aspect') === 'frame'
+    const imageHeight = isFrameAspect ? 800 : 630
+    const imageWidth = 1200
+
     const cacheUrl = origin + '/pools/' + networkName + '/' + poolAddress
     const data = await getRequest(
       cacheUrl,
@@ -109,8 +114,10 @@ export const onRequest: PagesFunction = async ({ params, request }) => {
           style={{
             backgroundColor: '#1B1B1B',
             display: 'flex',
-            width: '1200px',
-            height: '630px',
+            width: imageWidth,
+            height: imageHeight,
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
           <div
@@ -118,8 +125,10 @@ export const onRequest: PagesFunction = async ({ params, request }) => {
               display: 'flex',
               backgroundColor: `#1B1B1B`,
               alignItems: 'center',
-              height: '100%',
+              height: 'auto',
               padding: '96px',
+              maxWidth: '100%',
+              maxHeight: '100%',
             }}
           >
             <div
@@ -206,8 +215,8 @@ export const onRequest: PagesFunction = async ({ params, request }) => {
         </div>
       ),
       {
-        width: 1200,
-        height: 630,
+        width: imageWidth,
+        height: imageHeight,
         fonts: [
           {
             name: 'Inter',

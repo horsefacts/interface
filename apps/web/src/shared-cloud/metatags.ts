@@ -1,8 +1,11 @@
+import type { FrameEmbedNext } from '@farcaster/frame-sdk'
+
 export type MetaTagInjectorInput = {
   title: string
   image?: string
   url: string
   description?: string
+  frame?: FrameEmbedNext
 }
 
 export function formatTokenMetatagTitleName(symbol: string | undefined, name: string | undefined) {

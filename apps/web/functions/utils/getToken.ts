@@ -41,6 +41,24 @@ export default async function getToken(networkName: string, tokenAddress: string
 
   const title = formatTokenMetatagTitleName(asset.symbol, asset.name)
 
+  const frame = {
+    version: 'next',
+    imageUrl: `${image}?aspect=frame`,
+    button: {
+      title: `Buy ${asset.symbol}`,
+      action: {
+        type: 'launch_frame',
+        name: 'Uniframe',
+        url: `https://uniframe.org/swap?chain=${networkName.toLowerCase()}&outputCurrency=${convertTokenAddress(
+          uppercaseNetworkName,
+          tokenAddress,
+        )}`,
+        splashImageUrl: 'https://uniframe.org/favicon.png',
+        splashBackgroundColor: '#131313',
+      },
+    },
+  } as const
+
   const formattedAsset: Data = {
     title,
     image,
@@ -50,6 +68,7 @@ export default async function getToken(networkName: string, tokenAddress: string
     },
     ogImage: asset.project?.logoUrl,
     name: asset.name ?? 'Token',
+    frame,
   }
   return formattedAsset
 }

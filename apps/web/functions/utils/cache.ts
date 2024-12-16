@@ -1,3 +1,4 @@
+import { FrameEmbedNext } from '@farcaster/frame-sdk'
 import { ProtocolVersion } from 'uniswap/src/data/graphql/uniswap-data-api/__generated__/types-and-hooks'
 
 interface TokenData {
@@ -23,6 +24,7 @@ export interface Data {
   poolData?: PoolData
   tokenData?: TokenData
   nftCollectionData?: NftCollectionData
+  frame?: FrameEmbedNext
 }
 
 const CACHE_NAME = 'functions-cache' as const

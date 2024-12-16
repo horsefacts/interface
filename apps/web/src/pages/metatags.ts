@@ -43,6 +43,9 @@ export function useDynamicMetatags(metaTags: MetaTagInjectorInput = DEFAULT_META
         { property: 'twitter:image:alt', content: metaTags.title },
       )
     }
+    if (metaTags.frame) {
+      attributes.push({ name: 'fc:frame', content: JSON.stringify(metaTags.frame) })
+    }
     setMetaTagAttributes(attributes)
   }, [metaTags, location])
 
