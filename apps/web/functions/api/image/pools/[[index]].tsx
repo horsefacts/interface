@@ -125,8 +125,8 @@ export const onRequest: PagesFunction = async ({ params, request }) => {
               display: 'flex',
               backgroundColor: `#1B1B1B`,
               alignItems: 'center',
-              height: 'auto',
-              padding: '96px',
+              justifyContent: 'center',
+              height: '100%',
               maxWidth: '100%',
               maxHeight: '100%',
             }}
